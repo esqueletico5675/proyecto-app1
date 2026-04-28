@@ -1,3 +1,4 @@
+from sqlalchemy import true
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import Session, select
 from models import usuariobase,identification, posteos, crearposteo, UsuarioUpdate, PostUpdate
@@ -10,11 +11,14 @@ def crearusuario_db(usuario:usuariobase,session:Session):
     return new_usuario
 
 def show_user_db(session:Session):
-    return session.exec(select(identification))
+    return session.exec(select(identification).where(identification.activo == True)).all()
 
 def find_one_user (id: int ,session:Session):
     try:
-        return session.get_one(identification,id)
+        user = session.get_one(identification, id)
+        if not user.activo:
+            return None
+        return user
     except NoResultFound:
         return None
 
@@ -77,3 +81,8 @@ def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
     session.refresh(posteo)
     return posteo
 
+def show_ActiveUser_db(session: Session):
+    return  session.exec(select(identification.activo== True)).all()
+
+def inactivo_Users_db( session: Session):
+    return session.exec(select(identification.activo== False)).all()

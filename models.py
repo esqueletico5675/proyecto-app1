@@ -11,6 +11,7 @@ class usuariobase(SQLModel):
 
 class identification(usuariobase, table=True):
     id:int = Field(primary_key=True, default=None)
+    activo :bool = Field(default=True)
     posts: list["posteos"] = Relationship(back_populates="usuario")
 
 class posteos(SQLModel, table=True):
