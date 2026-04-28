@@ -51,8 +51,7 @@ def Delete_user_db(id: int, session: Session):
         session.refresh(user)
     except NoResultFound:
         return None
-    except NoResultFound:
-        return None
+
 
 def Delete_post_db(id: int, session: Session):
     try:
