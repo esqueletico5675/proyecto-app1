@@ -36,7 +36,5 @@ class userconposts(SQLModel):
 class UsuarioUpdate(usuariobase):
     name: str | None = None
 
-class PostUpdate(posteosinid):
+class PostUpdate(SQLModel):
     contenido: str | None = None
-    id_usuario: int
-    contador_post = int

@@ -18,6 +18,12 @@ def find_one_user (id: int ,session:Session):
     except NoResultFound:
         return None
 
+def find_one_post (id: int ,session:Session):
+    try:
+        return session.get_one(posteos, id)
+    except NoResultFound:
+        return None
+
 def create_post(post:crearposteo, session:Session):
     nuevopost = posteos.model_validate(post)
     session.add(nuevopost)
@@ -27,8 +33,7 @@ def create_post(post:crearposteo, session:Session):
 
 def obtener_posts_db(session: Session):
     posts = session.exec(select(posteos)).all()
-    return [{"contenido": p.contenido, "id_usuario": p.id_usuario} for p in posts]
-
+    return [{"Contenido": p.contenido, "ID_usuario": p.id_usuario, "#Contador_post":p.contador_post} for p in posts]
 
 def Delete_user_db(id: int, session: Session):
     try:
@@ -38,6 +43,15 @@ def Delete_user_db(id: int, session: Session):
         session.delete(user)
         session.commit()
         return user
+    except NoResultFound:
+        return None
+
+def Delete_post_db(id: int, session: Session):
+    try:
+        post = session.get_one(posteos, id)
+        session.delete(post)
+        session.commit()
+        return post
     except NoResultFound:
         return None
 
@@ -52,17 +66,14 @@ def update_one_usuario_db(id: int, new_usuario: UsuarioUpdate, session: Session)
     session.refresh(usuario)
     return usuario
 
-def find_one_post (id: int ,session:Session):
-    try:
-        return session.get_one(id)
-    except NoResultFound:
-        return None
-
 def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
-    usuario = find_one_user(id, session)
-    if usuario is None:
-        return None
-    posteo = obtener_posts_db(id, session)
+    posteo = find_one_post(id, session)
     if posteo is None:
         return None
+    posteo_update = new_post.model_dump(exclude_unset=True)
+    posteo.sqlmodel_update(posteo_update)
+    session.add(posteo)
+    session.commit()
+    session.refresh(posteo)
+    return posteo
 
