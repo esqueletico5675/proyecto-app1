@@ -42,11 +42,12 @@ def obtener_posts_db(session: Session):
 def Delete_user_db(id: int, session: Session):
     try:
         user = session.get_one(identification, id)
-        for post in user.posts:
-            session.delete(post)
-        session.delete(user)
+        user.activo = False
+        session.add(user)
         session.commit()
-        return user
+        session.refresh(user)
+    except NoResultFound:
+        return None
     except NoResultFound:
         return None
 
@@ -82,7 +83,7 @@ def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
     return posteo
 
 def show_ActiveUser_db(session: Session):
-    return  session.exec(select(identification.activo== True)).all()
+    return  session.exec(select(identification).where(identification.activo == True)).all()
 
 def inactivo_Users_db( session: Session):
-    return session.exec(select(identification.activo== False)).all()
+    return session.exec(select(identification).where(identification.activo == False)).all()

@@ -44,7 +44,7 @@ async def get_one_post(id:int, session:SessionDep):
 async def get_all_UserActive(session:SessionDep):
     return show_ActiveUser_db(session)
 
-@app.get("User_inactive/")
+@app.get("/User_inactive/")
 async def get_all_UserInactive(session:SessionDep):
     return inactivo_Users_db(session)
 
