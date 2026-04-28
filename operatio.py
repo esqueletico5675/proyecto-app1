@@ -82,6 +82,9 @@ def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
     session.refresh(posteo)
     return posteo
 
+def search_post_db (keyword: str, session: Session):
+    return session.exec(select(posteos).where(posteos.contenido.contains(keyword))).all()
+
 def show_ActiveUser_db(session: Session):
     return  session.exec(select(identification).where(identification.activo == True)).all()
 

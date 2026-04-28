@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends
 from models import (usuariobase, identification, crearposteo, posteos, userconposts, UsuarioUpdate, posteosinid,
                     PostUpdate)
 from operatio import (crearusuario_db, show_user_db, find_one_user, create_post, obtener_posts_db, Delete_user_db,
-                      update_one_usuario_db, find_one_post, update_one_post_db, Delete_post_db,show_ActiveUser_db,inactivo_Users_db)
+                      update_one_usuario_db, find_one_post, update_one_post_db, Delete_post_db,show_ActiveUser_db,inactivo_Users_db,search_post_db)
 from db import SessionDep, create_all_tables,  get_session
 from sqlmodel import Session
 
@@ -47,6 +47,10 @@ async def get_all_UserActive(session:SessionDep):
 @app.get("/User_inactive/")
 async def get_all_UserInactive(session:SessionDep):
     return inactivo_Users_db(session)
+
+@app.get("/Search_WithWord/")
+async def search_with_word(word: str, session:SessionDep):
+    return search_post_db(word, session)
 
 @app.patch("/UPDATE_USER/{id}", response_model=usuariobase)
 async def update_user(id: int, usuario : UsuarioUpdate, session: SessionDep):
