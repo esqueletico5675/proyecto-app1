@@ -33,5 +33,10 @@ class userconposts(SQLModel):
     name: str
     posts: list[posteosinid] = []
 
-class UserUpdate(usuariobase):
-    name: str | None = Field(None,exclude=True)
+class UsuarioUpdate(usuariobase):
+    name: str | None = None
+
+class PostUpdate(posteosinid):
+    contenido: str | None = None
+    id_usuario: int
+    contador_post = int

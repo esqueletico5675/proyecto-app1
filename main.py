@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
-from models import (usuariobase, identification, crearposteo,posteos,userconposts)
+from models import (usuariobase, identification, crearposteo,posteos,userconposts, UsuarioUpdate)
 from operatio import (crearusuario_db, show_user_db, find_one_user, create_post, obtener_posts_db,Delete_user_db, update_one_usuario_db)
 from db import SessionDep, create_all_tables,  get_session
 from sqlmodel import Session
@@ -27,9 +27,18 @@ async def show_one_user(id:int, session:SessionDep):
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+
+
 @app.get("/LOOK_ALL_POSTS")
 def ver_posts(session: Session = Depends(get_session)):
     return obtener_posts_db(session)
+
+@app.patch("/UPDATE_USER/{id}", response_model=usuariobase)
+async def update_user(id: int, usuario : UsuarioUpdate, session: SessionDep):
+    update = update_one_usuario_db(id, usuario, session)
+    if not (update):
+        raise HTTPException(status_code=404, detail=f"{id} user not found")
+    return update
 
 
 @app.delete("/DELETE_USER/{id}", response_model=usuariobase )

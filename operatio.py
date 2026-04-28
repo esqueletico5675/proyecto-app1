@@ -1,6 +1,6 @@
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import Session, select
-from models import usuariobase,identification, posteos, crearposteo, UserUpdate
+from models import usuariobase,identification, posteos, crearposteo, UsuarioUpdate, PostUpdate
 
 def crearusuario_db(usuario:usuariobase,session:Session):
     new_usuario = identification.model_validate(usuario)
@@ -41,7 +41,7 @@ def Delete_user_db(id: int, session: Session):
     except NoResultFound:
         return None
 
-def update_one_usuario_db(id: int, new_usuario: UserUpdate, session: Session):
+def update_one_usuario_db(id: int, new_usuario: UsuarioUpdate, session: Session):
     usuario=find_one_user(id, session)
     if usuario is None:
         return None
@@ -51,3 +51,18 @@ def update_one_usuario_db(id: int, new_usuario: UserUpdate, session: Session):
     session.commit()
     session.refresh(usuario)
     return usuario
+
+def find_one_post (id: int ,session:Session):
+    try:
+        return session.get_one(id)
+    except NoResultFound:
+        return None
+
+def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
+    usuario = find_one_user(id, session)
+    if usuario is None:
+        return None
+    posteo = obtener_posts_db(id, session)
+    if posteo is None:
+        return None
+
