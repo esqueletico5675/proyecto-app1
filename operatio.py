@@ -11,7 +11,7 @@ def crearusuario_db(usuario:usuariobase,session:Session):
     return new_usuario
 
 def show_user_db(session:Session):
-    return session.exec(select(identification).where(identification.activo == True)).all()
+    return session.exec(select(identification)).all()
 
 def find_one_user (id: int ,session:Session):
     try:
@@ -29,6 +29,9 @@ def find_one_post (id: int ,session:Session):
         return None
 
 def create_post(post:crearposteo, session:Session):
+    user = find_one_user(post.id_usuario, session)
+    if user is None:
+        return None
     nuevopost = posteos.model_validate(post)
     session.add(nuevopost)
     session.commit()

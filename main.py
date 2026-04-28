@@ -16,7 +16,10 @@ async def cargarusuario(usuario:usuariobase, session:SessionDep):
 
 @app.post("/CREATE_POST",response_model=posteos)
 def crear_post(post: crearposteo, session: Session = Depends(get_session)):
-    return create_post(post, session)
+    result = create_post(post, session)
+    if result is None:
+        raise HTTPException(status_code=404, detail="user dont exist or user inactive")
+    return result
 
 @app.get("/SHOW_ALL_USERS",response_model=list[identification])
 async def mostrar_usuarios(session:SessionDep):
