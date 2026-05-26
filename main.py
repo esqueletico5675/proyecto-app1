@@ -1,10 +1,17 @@
-from fastapi import FastAPI, HTTPException, Depends
-from models import (usuariobase, identification, crearposteo, posteos, userconposts, UsuarioUpdate, posteosinid,
-                    PostUpdate)
-from operatio import (crearusuario_db, show_user_db, find_one_user, create_post, obtener_posts_db, Delete_user_db,
-                      update_one_usuario_db, find_one_post, update_one_post_db, Delete_post_db,show_ActiveUser_db,inactivo_Users_db,search_post_db)
+from models import (usuariobase, identification, crearposteo,
+                    posteos, userconposts, UsuarioUpdate,
+                    posteosinid,PostUpdate)
+
+from operatio import (crearusuario_db,show_user_db, find_one_user,
+                      create_post, obtener_posts_db, Delete_user_db,
+                      update_one_usuario_db, find_one_post, update_one_post_db,
+                      Delete_post_db,show_ActiveUser_db,inactivo_Users_db,search_post_db)
+
 from db import SessionDep, create_all_tables,  get_session
 from sqlmodel import Session
+from fastapi import FastAPI,HTTPException, UploadFile, File, Depends
+from utils import save_img_local,save_img_remote
+
 
 
 app = FastAPI(lifespan=create_all_tables)
@@ -82,3 +89,13 @@ async def delete_post(id: int, session: SessionDep):
     if not (deleted):
         raise HTTPException(status_code=404, detail=f"{id} post not found")
     return deleted
+
+@app.post("/image/local")
+async def image_save_local(img: UploadFile = File(...)):
+    path = save_img_local(img)
+    return {"path for your image": path}
+
+@app.post("/image/remote")
+async def image_save_remote(file:UploadFile = File(...)):
+    url_img = save_img_remote(file)
+    return {"url for your image":url_img}
