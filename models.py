@@ -4,37 +4,37 @@ from sqlalchemy import true
 from sqlmodel import SQLModel, Field, Relationship
 
 
-class usuariobase(SQLModel):
+class UserBase(SQLModel):
     name:str = Field(default=None,
                      min_length=1,
                     max_length=15)
 
-class identification(usuariobase, table=True):
-    id:int = Field(primary_key=True, default=None)
-    activo :bool = Field(default=True)
-    posts: list["posteos"] = Relationship(back_populates="usuario")
+class UserID(UserBase, table=True):
+    id: int = Field(primary_key=True, default=None)
+    activo: bool = Field(default=True)
+    posts: list["Post"] = Relationship(back_populates="usuario")
 
-class posteos(SQLModel, table=True):
+class Post(SQLModel, table=True):
     contador_post: Optional[int] = Field(default=None, primary_key=True)
-    contenido:str = Field(default=None)
-    id_usuario: int = Field(default=None, foreign_key="identification.id")
-    usuario: Optional[identification]   = Relationship(back_populates="posts")
+    contenido: str = Field(default=None)
+    id_usuario: int = Field(default=None, foreign_key="userid.id")
+    usuario: Optional[UserID] = Relationship(back_populates="posts")
 
-class crearposteo(SQLModel):
+class CreatePost(SQLModel):
     contenido:str
     id_usuario:int
 
-class posteosinid(SQLModel):
+class PostnoID(SQLModel):
     contenido: str
     id_usuario: int
     contador_post: int
 
-class userconposts(SQLModel):
+class UserwithPost(SQLModel):
     id: int
     name: str
-    posts: list[posteosinid] = []
+    posts: list[PostnoID] = []
 
-class UsuarioUpdate(usuariobase):
+class UserUptade(UserBase):
     name: str | None = None
 
 class PostUpdate(SQLModel):

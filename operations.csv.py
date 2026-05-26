@@ -14,7 +14,7 @@ def Newid():
     except (FileNotFoundError, csv.Error):
         return 1
 
-def saveUsuarioID (usuario: identification):
+def saveUsuarioID (usuario: UserID):
     exist_users = os.path.exists(CSV_FILE)
     with open(CSV_FILE, mode = "a+",newline ='') as file:
         writer = csv.DictWriter(file, fieldnames = columns)
@@ -22,7 +22,7 @@ def saveUsuarioID (usuario: identification):
             writer.writeheader()
         writer.writerow(usuario.model_dump())
 
-def Createuser (usuario : usuariobase):
+def Createuser (usuario : UserBase):
     id = Newid()
     new_user  = saveUsuarioID(id=id,**usuario.model_dump())
     saveUsuarioID(new_user)
@@ -37,7 +37,7 @@ def show_user (id: int):
 
 
 def delete_user (id: int):
-    user_deleted : Optional[usuariobase]=None
+    user_deleted : Optional[UserBase]=None
     users = show_user()
     with open(CSV_FILE,mode = "w",newline ='') as file:
         writer = csv.DictWriter(file, fieldnames = columns)
@@ -50,4 +50,4 @@ def delete_user (id: int):
     if user_deleted:
         dict_user_no_id = user_deleted.model_dump()
         del dict_user_no_id["id"]
-        return usuariobase(**dict_user_no_id)
+        return UserBase(**dict_user_no_id)
