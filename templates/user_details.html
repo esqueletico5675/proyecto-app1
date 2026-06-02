@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1 class="mb-4">{{ usuario.name }}</h1>
+    <p>ID: {{ usuario.id }}</p>
+    <p>
+        {% if usuario.activo %}
+            <span class="badge bg-success">Activo</span>
+        {% else %}
+            <span class="badge bg-danger">Inactivo</span>
+        {% endif %}
+    </p>
+
+    <h2 class="mt-4">Posts</h2>
+    {% if usuario.posts %}
+        <ul class="list-group">
+            {% for post in usuario.posts %}
+                <li class="list-group-item">{{ post.contenido }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Este usuario no tiene posts.</p>
+    {% endif %}
+
+    <a href="/usuarios" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

@@ -16,8 +16,6 @@ def show_user_db(session:Session):
 def find_one_user (id: int ,session:Session):
     try:
         user = session.get_one(UserID, id)
-        if not user.activo:
-            return None
         return user
     except NoResultFound:
         return None

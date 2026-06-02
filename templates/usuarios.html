@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1 class="mb-4">Usuarios</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>
+                    {% if usuario.activo %}
+                        <a href="/usuarios/{{ usuario.id }}">{{ usuario.name }}</a>
+                    {% else %}
+                        {{ usuario.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if usuario.activo %}
+                        <span class="badge bg-success">Activo</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactivo</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

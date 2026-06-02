@@ -1,3 +1,5 @@
+from starlette.responses import HTMLResponse
+
 from models import (UserBase, UserID, CreatePost,
                     Post, UserwithPost, UserUptade,
                     PostnoID, PostUpdate)
@@ -11,10 +13,29 @@ from db import SessionDep, create_all_tables,  get_session
 from sqlmodel import Session
 from fastapi import FastAPI,HTTPException, UploadFile, File, Depends
 from utils import save_img_local,save_img_remote
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
 
 
 
 app = FastAPI(lifespan=create_all_tables)
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def home (request: Request):
+    return templates.TemplateResponse({"request": request} ,"index.html")
+
+@app.get ("/usuarios")
+def ver_users (request:Request, session:SessionDep):
+    usuarios = show_user_db(session)
+    return templates.TemplateResponse( request = request, name = "usuarios.html",context = {"usuarios": usuarios})
+
+@app.get ("/usuarios/{id}")
+async def user_Details (id:int,request:Request, session:SessionDep):
+    user = find_one_user(id, session)
+    if not user:
+        raise HTTPException(status_code=404, detail="user not found")
+    return templates.TemplateResponse( request = request, name = "user_details.html",context = {"usuario": user})
 
 
 @app.post("/CREATE_USERS",response_model=UserID)
