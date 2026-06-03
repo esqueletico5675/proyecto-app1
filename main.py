@@ -23,7 +23,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def home (request: Request):
-    return templates.TemplateResponse({"request": request} ,"index.html")
+    return templates.TemplateResponse({"request": request} ,"index.html", context={})
 
 @app.get ("/usuarios")
 def ver_users (request:Request, session:SessionDep):
@@ -37,6 +37,10 @@ async def user_Details (id:int,request:Request, session:SessionDep):
         raise HTTPException(status_code=404, detail="user not found")
     return templates.TemplateResponse( request = request, name = "user_details.html",context = {"usuario": user})
 
+@app.get("/posts")
+def ver_posts(request: Request, session: SessionDep):
+    posts = obtener_posts_db(session)
+    return templates.TemplateResponse(request=request, name="posts.html", context={"posts": posts})
 
 @app.post("/CREATE_USERS",response_model=UserID)
 async def cargarusuario(usuario:UserBase, session:SessionDep):

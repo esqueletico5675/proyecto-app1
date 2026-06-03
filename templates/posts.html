@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1 class="mb-4">Posts</h1>
+
+    {% if posts %}
+        <div class="list-group">
+            {% for post in posts %}
+                <div class="list-group-item">
+                    <p class="mb-1">{{ post.Contenido }}</p>
+                    <small class="text-muted">Usuario ID: {{ post.ID_usuario }} · Post #{{ post["#Contador_post"] }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay posts todavía.</p>
+    {% endif %}
+{% endblock %}
