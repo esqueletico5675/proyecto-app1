@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="card text-center shadow" style="width: 24rem;">
+    <div class="card-body">
+      <h2 class="card-title text-success">✓ Post creado</h2>
+      <p class="card-text fs-5 mt-3">
+        Post #<span class="badge bg-primary fs-5">{{ post.contador_post }}</span>
+      </p>
+      <p class="card-text">{{ post.contenido }}</p>
+      <a href="/posts" class="btn btn-outline-primary mt-3">Ver posts</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

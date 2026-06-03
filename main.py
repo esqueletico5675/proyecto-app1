@@ -14,7 +14,7 @@ from sqlmodel import Session
 from fastapi import FastAPI,HTTPException, UploadFile, File, Depends
 from utils import save_img_local,save_img_remote
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
+from fastapi import Request, Form
 
 
 
@@ -46,6 +46,37 @@ def ver_posts(request: Request, session: SessionDep):
 def buscar_posts(request: Request, word: str, session: SessionDep):
         posts = search_post_db(word, session)
         return templates.TemplateResponse(request=request, name="posts.html", context={"posts": posts, "word": word})
+
+@app.post("/form/crear-usuario", response_class=HTMLResponse)
+async def form_crear_usuario(
+    request: Request,
+    name: str = Form(),
+    session: SessionDep = None
+):
+    usuario = UserBase(name=name)
+    resultado = crearusuario_db(usuario, session)
+    return templates.TemplateResponse(
+        request=request,
+        name="usuario_creado.html",
+        context={"usuario": resultado}
+    )
+
+@app.post("/form/crear-post", response_class=HTMLResponse)
+async def form_crear_post(
+    request: Request,
+    user_id: int = Form(),
+    contenido: str = Form(),
+    session: SessionDep = None
+):
+    post = CreatePost(id_usuario=user_id, contenido=contenido)
+    resultado = create_post(post, session)
+    if not resultado:
+        raise HTTPException(status_code=404, detail="Usuario no existe o está inactivo")
+    return templates.TemplateResponse(
+        request=request,
+        name="post_creado.html",
+        context={"post": resultado}
+    )
 
 @app.post("/CREATE_USERS",response_model=UserID)
 async def cargarusuario(usuario:UserBase, session:SessionDep):

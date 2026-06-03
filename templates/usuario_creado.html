@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="card text-center shadow" style="width: 24rem;">
+    <div class="card-body">
+      <h2 class="card-title text-success">✓ Usuario creado</h2>
+      <p class="card-text fs-5 mt-3">
+        Bienvenido, <strong>{{ usuario.name }}</strong>
+      </p>
+      <p class="card-text">
+        Tu ID es: <span class="badge bg-primary fs-5">{{ usuario.id }}</span>
+      </p>
+      <a href="/usuarios" class="btn btn-outline-primary mt-3">Ver usuarios</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

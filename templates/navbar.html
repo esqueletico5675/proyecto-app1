@@ -29,10 +29,10 @@
           + Post
         </button>
       </div>
-
     </div>
   </div>
 </nav>
+
 
 <div class="modal fade" id="modalCrearUsuario" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -41,17 +41,18 @@
         <h5 class="modal-title" id="modalUsuarioLabel">Crear Usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div id="usuarioMsg"></div>
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="usuarioName" placeholder="Tu nombre">
+      <form method="POST" action="/form/crear-usuario">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="name" placeholder="Ej: pepe" required>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="btnGuardarUsuario">Guardar</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -64,21 +65,22 @@
         <h5 class="modal-title" id="modalPostLabel">Crear Post</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div id="postMsg"></div>
-        <div class="mb-3">
-          <label class="form-label">ID de Usuario</label>
-          <input type="number" class="form-control" id="postUserId" placeholder="Ej: 1">
+      <form method="POST" action="/form/crear-post">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">ID de Usuario</label>
+            <input type="number" class="form-control" name="user_id" placeholder="Ej: 1" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contenido</label>
+            <textarea class="form-control" name="contenido" rows="3" placeholder="Escribe tu post..." required></textarea>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Contenido</label>
-          <textarea class="form-control" id="postContenido" rows="3" placeholder="Expresate"></textarea>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Publicar</button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="btnGuardarPost">Publicar</button>
-      </div>
+      </form>
     </div>
   </div>
 </div>
