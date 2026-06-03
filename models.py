@@ -18,7 +18,7 @@ class Post(SQLModel, table=True):
     contador_post: Optional[int] = Field(default=None, primary_key=True)
     contenido: str = Field(default=None)
     id_usuario: int = Field(default=None, foreign_key="userid.id")
-    usuario: Optional[UserID] = Relationship(back_populates="posts")
+    usuario: Optional[UserID]  = Relationship(back_populates="posts")
 
 class CreatePost(SQLModel):
     contenido:str

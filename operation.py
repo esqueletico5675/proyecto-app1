@@ -2,6 +2,7 @@ from sqlalchemy import true
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import Session, select
 from models import UserBase,UserID, Post, CreatePost, UserUptade, PostUpdate
+from sqlalchemy.orm import selectinload
 
 def crearusuario_db(usuario:UserBase, session:Session):
     new_usuario = UserID.model_validate(usuario)
@@ -82,7 +83,11 @@ def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
     return posteo
 
 def search_post_db(keyword: str, session: Session):
-    return session.exec(select(Post).where(Post.contenido.contains(keyword))).all()
+    statement = (
+        select(Post).options(selectinload(Post.usuario)).where(Post.contenido.contains(keyword)))
+    return session.exec(statement).all()
+
+#return session.exec(select(Post).where(Post.contenido.contains(keyword))).all()
 
 def show_ActiveUser_db(session: Session):
     return  session.exec(select(UserID).where(UserID.activo == True)).all()
