@@ -10,20 +10,76 @@
           <a class="nav-link active" aria-current="page" href="/usuarios">Usuarios</a>
         </li>
         <li class="nav-item">
-
-        </li>
-        <li class="nav-item">
-    <a class="nav-link" href="/posts">Posts</a>
-        </li>
-        </li>
-        <li class="nav-item">
-
+          <a class="nav-link" href="/posts">Posts</a>
         </li>
       </ul>
-      <form class="d-flex" role="search" action="/buscar" method="get">
+
+      <form class="d-flex me-3" role="search" action="/buscar" method="get">
         <input class="form-control me-2" type="search" name="word" placeholder="Buscar post..." aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="button"
+                data-bs-toggle="modal" data-bs-target="#modalCrearUsuario">
+          + Usuario
+        </button>
+        <button class="btn btn-primary" type="button"
+                data-bs-toggle="modal" data-bs-target="#modalCrearPost">
+          + Post
+        </button>
+      </div>
+
     </div>
   </div>
 </nav>
+
+<div class="modal fade" id="modalCrearUsuario" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalUsuarioLabel">Crear Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="usuarioMsg"></div>
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="usuarioName" placeholder="Tu nombre">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnGuardarUsuario">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalCrearPost" tabindex="-1" aria-labelledby="modalPostLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPostLabel">Crear Post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="postMsg"></div>
+        <div class="mb-3">
+          <label class="form-label">ID de Usuario</label>
+          <input type="number" class="form-control" id="postUserId" placeholder="Ej: 1">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Contenido</label>
+          <textarea class="form-control" id="postContenido" rows="3" placeholder="Expresate"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnGuardarPost">Publicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

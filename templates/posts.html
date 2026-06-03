@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-    <h1 class="mb-4">Posts</h1>
+<h1 class="mb-4">Posts</h1>
 
-    {% if posts %}
-        <div class="list-group">
-            {% for post in posts %}
-        <div class="list-group-item">
-            <p class="mb-1">{{ post.contenido }}</p>
-            <small class="text-muted">
-                Usuario: {{ post.usuario.name}} · Post #{{ post.contador_post }}
-            </small>
-        </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No hay posts todavía.</p>
-    {% endif %}
+{% if word %}
+    <p class="text-muted">Resultados para: <strong>{{ word }}</strong></p>
+{% endif %}
+
+{% if posts %}
+    <div class="row">
+        {% for post in posts %}
+            {% include "post_card.html" %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">No hay posts todavía.</p>
+{% endif %}
+
 {% endblock %}
