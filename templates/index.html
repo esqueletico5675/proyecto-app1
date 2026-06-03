@@ -1,9 +1,71 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-<h1>Bienvenido a Lics </h1>
 
+<div class="card text-bg-dark mb-4">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgoVscQNMoEdpIHkKFK19h3mI9ULhXwCTNdA&s"
+       class="card-img" alt="portada lics" style="max-height: 450px; object-fit: cover; opacity: 0.6;">
+  <div class="card-img-overlay d-flex flex-column justify-content-end">
+    <h1 class="card-title display-4 fw-bold">Bienvenido a LICS</h1>
+    <p class="card-text fs-5">
+      La nueva plataforma donde puedes compartir y expresarte con poemas, fabulas, refranes. ETC.
+    </p>
+    <p class="card-text">
+      <a href="/posts" class="btn btn-primary me-2">Ver Posts</a>
+      <a href="/usuarios" class="btn btn-outline-light">Ver Usuarios</a>
+    </p>
+  </div>
+</div>
 
-    <h2>¿Que es lics?</h2>
+<div class="row mt-4">
+  <div class="col-md-6 mb-3">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">¿Qué es LICS?</h5>
+        <p class="card-text">
+        Lics es una plataforma diseñada para compartir emociones, pensamientos
+            y experiencias de una manera segura y auténtica. Su dinámica se centra
+            en la expresión personal a través de diferentes formas literarias,
+            como poemas, relatos, reflexiones, cuentos y otros estilos de escritura
+            creativa. La plataforma ofrece un espacio donde cada persona puede expresar
+            lo que siente libremente, fomentando la creatividad y el desarrollo de la
+            escritura. Además, Lics permite conectar con usuarios que comparten intereses
+            , gustos y perspectivas similares, creando una comunidad basada en el respeto,
+            la empatía y el intercambio de ideas. Gracias a su amplia variedad de formatos
+            de escritura, Lics se convierte en un lugar donde las palabras cobran vida,
+            permitiendo a cada usuario encontrar la mejor forma de expresar sus emociones
+            y descubrir nuevas historias, pensamientos e inspiraciones.
+
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-3">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">¿Cómo empezar?</h5>
+        <p class="card-text">
+          Crea tu usuario con el botón <strong>+ Usuario</strong> en la navbar,
+          guarda tu ID y úsalo para publicar con <strong>+ Post</strong> ubicadas
+            en la parte superior derecha de la pagina.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6 mb-3">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">¿Cómo nace LICS?</h5>
+        <p class="card-text">
+          Lics se crea apartir de la idea de que un simple mensaje de expresion
+            podria mejorar tu estado de animo, queriendote expresar libremente
+            y de forma creativa como por ejemplo un poema donde tambien puedas
+            conectar con personas que compartan tu pensamiento e ideas
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
