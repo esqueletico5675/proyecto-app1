@@ -42,6 +42,11 @@ def ver_posts(request: Request, session: SessionDep):
     posts = obtener_posts_db(session)
     return templates.TemplateResponse(request=request, name="posts.html", context={"posts": posts})
 
+@app.get("/buscar")
+def buscar_posts(request: Request, word: str, session: SessionDep):
+    posts = search_post_db(word, session)
+    return templates.TemplateResponse(request=request, name="posts.html", context={"posts": posts, "word": word})
+
 @app.post("/CREATE_USERS",response_model=UserID)
 async def cargarusuario(usuario:UserBase, session:SessionDep):
     return crearusuario_db(usuario, session)

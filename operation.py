@@ -37,8 +37,7 @@ def create_post(post:CreatePost, session:Session):
     return nuevopost
 
 def obtener_posts_db(session: Session):
-    posts = session.exec(select(Post)).all()
-    return [{"Contenido": p.contenido, "ID_usuario": p.id_usuario, "#Contador_post":p.contador_post} for p in posts]
+    return session.exec(select(Post)).all()
 
 def Delete_user_db(id: int, session: Session):
     try:
@@ -82,7 +81,7 @@ def update_one_post_db(id: int, new_post: PostUpdate, session : Session):
     session.refresh(posteo)
     return posteo
 
-def search_post_db (keyword: str, session: Session):
+def search_post_db(keyword: str, session: Session):
     return session.exec(select(Post).where(Post.contenido.contains(keyword))).all()
 
 def show_ActiveUser_db(session: Session):

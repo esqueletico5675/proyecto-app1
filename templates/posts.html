@@ -6,10 +6,10 @@
     {% if posts %}
         <div class="list-group">
             {% for post in posts %}
-                <div class="list-group-item">
-                    <p class="mb-1">{{ post.Contenido }}</p>
-                    <small class="text-muted">Usuario ID: {{ post.ID_usuario }} · Post #{{ post["#Contador_post"] }}</small>
-                </div>
+        <div class="list-group-item">
+            <p class="mb-1">{{ post.contenido }}</p>
+            <small class="text-muted">Usuario ID: {{ post.id_usuario }} · Post #{{ post.contador_post }}</small>
+        </div>
             {% endfor %}
         </div>
     {% else %}
