@@ -38,7 +38,7 @@ def create_post(post:CreatePost, session:Session):
     return nuevopost
 
 def obtener_posts_db(session: Session):
-    return session.exec(select(Post)).all()
+    return session.exec(select(Post).order_by(Post.contador_post.desc())).all()
 
 def Delete_user_db(id: int, session: Session):
     try:
