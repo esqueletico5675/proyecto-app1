@@ -12,7 +12,7 @@
             <h5 class="card-title fw-bold">
                 {{ post.usuario.name if post.usuario else "Usuario desconocido" }}
             </h5>
-            <p class="card-text">{{ post.contenido }}</p>
+            <p class="card-text" style="overflow-y: auto; max-height: 80px;">{{ post.contenido }}</p>
             <p class="card-text">
                 <small>Post #{{ post.contador_post }}</small>
             </p>
@@ -31,7 +31,7 @@
                 <a href="/usuarios/{{ post.usuario.id if post.usuario else '#' }}"
                    class="btn btn-sm btn-outline-light">Ver usuario</a>
                 <a href="/posts/{{ post.contador_post }}/editar"
-                   class="btn btn-sm btn-warning">✏️ Editar</a>
+                   class="btn btn-sm btn-warning">Editar</a>
             </div>
         </div>
     </div>
