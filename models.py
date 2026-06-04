@@ -19,10 +19,12 @@ class Post(SQLModel, table=True):
     contenido: str = Field(default=None)
     id_usuario: int = Field(default=None, foreign_key="userid.id")
     usuario: Optional[UserID]  = Relationship(back_populates="posts")
+    pin: Optional[int] = Field(default=None)
 
 class CreatePost(SQLModel):
     contenido:str
     id_usuario:int
+    pin : int
 
 class PostnoID(SQLModel):
     contenido: str

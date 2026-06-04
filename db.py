@@ -6,6 +6,7 @@ from fastapi import FastAPI, Depends
 from typing import Annotated
 from models import *
 
+
 load_dotenv()
 neon_db = os.getenv("DATABASE_URL")
 print("DB URL;", neon_db)
