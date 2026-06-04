@@ -69,6 +69,8 @@ async def form_crear_post(
     contenido: str = Form(),
     pin: int = Form(),
 
+
+
 ):
     post = CreatePost(id_usuario=user_id, contenido=contenido, pin=pin)
     resultado = create_post(post, session)
@@ -78,6 +80,64 @@ async def form_crear_post(
         request=request,
         name="post_creado.html",
         context={"post": resultado}
+    )
+
+
+@app.get("/posts/{id}/editar", response_class=HTMLResponse)
+async def form_editar_post(id: int, request: Request, session: SessionDep):
+    post = find_one_post(id, session)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    return templates.TemplateResponse(
+        request=request,
+        name="editar_post.html",
+        context={"post": post})
+
+@app.post("/posts/{id}/editar", response_class=HTMLResponse)
+async def actualizar_post(
+    id: int,
+    request: Request,
+    session: SessionDep,
+    pin: int = Form(),
+    contenido: str = Form(),
+):
+    post = find_one_post(id, session)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    if post.pin != pin:
+        return templates.TemplateResponse(
+            request=request,
+            name="editar_post.html",
+            context={"post": post, "error": "PIN incorrecto ❌"}
+        )
+    update = update_one_post_db(id, PostUpdate(contenido=contenido), session)
+    return templates.TemplateResponse(
+        request=request,
+        name="post_creado.html",
+        context={"post": update, "mensaje": "Post actualizado ✓"}
+    )
+
+@app.post("/posts/{id}/borrar", response_class=HTMLResponse)
+async def borrar_post(
+    id: int,
+    request: Request,
+    session: SessionDep,
+    pin: int = Form(),
+):
+    post = find_one_post(id, session)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    if post.pin != pin:
+        return templates.TemplateResponse(
+            request=request,
+            name="editar_post.html",
+            context={"post": post, "error": "PIN incorrecto ❌"}
+        )
+    Delete_post_db(id, session)
+    return templates.TemplateResponse(
+        request=request,
+        name="post_borrado.html",
+        context={}
     )
 
 @app.post("/CREATE_USERS",response_model=UserID)

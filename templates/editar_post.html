@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center mt-4">
+  <div class="card shadow" style="width: 32rem;">
+    <div class="card-body">
+
+      <h4 class="card-title mb-1">Post #{{ post.contador_post }}</h4>
+      <p class="text-muted mb-4">
+        Por: {{ post.usuario.name if post.usuario else "Usuario desconocido" }}
+      </p>
+
+      {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <!-- Formulario Actualizar -->
+      <h6 class="fw-bold">Actualizar contenido</h6>
+      <form method="POST" action="/posts/{{ post.contador_post }}/editar">
+        <div class="mb-3">
+          <label class="form-label">Contenido</label>
+          <textarea class="form-control" name="contenido" rows="3" required>{{ post.contenido }}</textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">PIN</label>
+          <input type="password" class="form-control" name="pin" placeholder="Ingresa tu PIN" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+      </form>
+
+      <hr class="my-4">
+
+      <!-- Formulario Borrar -->
+      <h6 class="fw-bold text-danger">Eliminar post</h6>
+      <form method="POST" action="/posts/{{ post.contador_post }}/borrar">
+        <div class="mb-3">
+          <label class="form-label">PIN</label>
+          <input type="password" class="form-control" name="pin" placeholder="Ingresa tu PIN" required>
+        </div>
+        <button type="submit" class="btn btn-danger w-100">🗑 Eliminar</button>
+      </form>
+
+      <a href="/posts" class="btn btn-outline-secondary w-100 mt-3">← Volver a posts</a>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
