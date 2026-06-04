@@ -13,12 +13,10 @@
           <a class="nav-link" href="/posts">Posts</a>
         </li>
       </ul>
-
       <form class="d-flex me-3" role="search" action="/buscar" method="get">
         <input class="form-control me-2" type="search" name="word" placeholder="Buscar post..." aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
-
       <div class="d-flex gap-2">
         <button class="btn btn-primary" type="button"
                 data-bs-toggle="modal" data-bs-target="#modalCrearUsuario">
@@ -33,7 +31,7 @@
   </div>
 </nav>
 
-
+<!-- Modal Crear Usuario -->
 <div class="modal fade" id="modalCrearUsuario" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -57,7 +55,7 @@
   </div>
 </div>
 
-
+<!-- Modal Crear Post -->
 <div class="modal fade" id="modalCrearPost" tabindex="-1" aria-labelledby="modalPostLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -75,6 +73,10 @@
             <label class="form-label">Contenido</label>
             <textarea class="form-control" name="contenido" rows="3" placeholder="Escribe tu post..." required></textarea>
           </div>
+          <div class="mb-3">
+            <label class="form-label">PIN (para editar o borrar tu post después)</label>
+            <input type="password" class="form-control" name="pin" placeholder="Ej: 1234" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -84,4 +86,3 @@
     </div>
   </div>
 </div>
-

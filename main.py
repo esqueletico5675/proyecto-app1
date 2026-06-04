@@ -64,11 +64,13 @@ async def form_crear_usuario(
 @app.post("/form/crear-post", response_class=HTMLResponse)
 async def form_crear_post(
     request: Request,
+    session: SessionDep,
     user_id: int = Form(),
     contenido: str = Form(),
-    session: SessionDep = None
+    pin: int = Form(),
+
 ):
-    post = CreatePost(id_usuario=user_id, contenido=contenido)
+    post = CreatePost(id_usuario=user_id, contenido=contenido, pin=pin)
     resultado = create_post(post, session)
     if not resultado:
         raise HTTPException(status_code=404, detail="Usuario no existe o está inactivo")
