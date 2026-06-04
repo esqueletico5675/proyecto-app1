@@ -2,71 +2,95 @@
 
 {% block contenido %}
 
-<div class="card text-bg-dark mb-4">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgoVscQNMoEdpIHkKFK19h3mI9ULhXwCTNdA&s"
-       class="card-img" alt="portada lics" style="max-height: 450px; object-fit: cover; opacity: 0.6;">
-  <div class="card-img-overlay d-flex flex-column justify-content-end">
-    <h1 class="card-title display-4 fw-bold">Bienvenido a LICS</h1>
-    <p class="card-text fs-5">
-      La nueva plataforma donde puedes compartir y expresarte con poemas, fabulas, refranes. ETC.
-    </p>
-    <p class="card-text">
-      <a href="/posts" class="btn btn-primary me-2">Ver Posts</a>
-      <a href="/usuarios" class="btn btn-outline-light">Ver Usuarios</a>
-    </p>
+<div id="carouselExampleDark" class="carousel carousel-dark slide mb-4" style="border-radius: 12px; overflow: hidden; max-height: 450px;">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
   </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="5000">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgoVscQNMoEdpIHkKFK19h3mI9ULhXwCTNdA&s"
+           class="d-block w-100" alt="slide 1"
+           style="height: 450px; object-fit: cover; opacity: 0.7;">
+      <div class="carousel-caption d-flex flex-column justify-content-end pb-4">
+        <h1 class="display-4 fw-bold">Bienvenido a LICS</h1>
+        <p class="fs-5">La nueva plataforma donde puedes compartir y expresarte con poemas, fábulas, refranes y más.</p>
+        <p>
+          <a href="/posts" class="btn btn-primary me-2">Ver Posts</a>
+          <a href="/usuarios" class="btn btn-outline-dark">Ver Usuarios</a>
+        </p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1400"
+           class="d-block w-100" alt="slide 2"
+           style="height: 450px; object-fit: cover; opacity: 0.7;">
+      <div class="carousel-caption d-flex flex-column justify-content-end pb-4">
+        <h2 class="fw-bold">Exprésate libremente</h2>
+        <p class="fs-5">Comparte tus emociones, pensamientos y experiencias de forma creativa.</p>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="5000">
+      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400"
+           class="d-block w-100" alt="slide 3"
+           style="height: 450px; object-fit: cover; opacity: 0.7;">
+      <div class="carousel-caption d-flex flex-column justify-content-end pb-4">
+        <h2 class="fw-bold">Conecta con otros</h2>
+        <p class="fs-5">Encuentra personas que comparten tus ideas, gustos y perspectivas.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
-<div class="row mt-4">
-  <div class="col-md-6 mb-3">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">¿Qué es LICS?</h5>
-        <p class="card-text">
+<!-- Cards informativas -->
+<div class="card-group mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">¿Qué es LICS?</h5>
+      <p class="card-text">
         Lics es una plataforma diseñada para compartir emociones, pensamientos
-            y experiencias de una manera segura y auténtica. Su dinámica se centra
-            en la expresión personal a través de diferentes formas literarias,
-            como poemas, relatos, reflexiones, cuentos y otros estilos de escritura
-            creativa. La plataforma ofrece un espacio donde cada persona puede expresar
-            lo que siente libremente, fomentando la creatividad y el desarrollo de la
-            escritura. Además, Lics permite conectar con usuarios que comparten intereses
-            , gustos y perspectivas similares, creando una comunidad basada en el respeto,
-            la empatía y el intercambio de ideas. Gracias a su amplia variedad de formatos
-            de escritura, Lics se convierte en un lugar donde las palabras cobran vida,
-            permitiendo a cada usuario encontrar la mejor forma de expresar sus emociones
-            y descubrir nuevas historias, pensamientos e inspiraciones.
-
-        </p>
-      </div>
+        y experiencias de una manera segura y auténtica. Su dinámica se centra
+        en la expresión personal a través de diferentes formas literarias,
+        como poemas, relatos, reflexiones, cuentos y otros estilos de escritura
+        creativa. La plataforma ofrece un espacio donde cada persona puede expresar
+        lo que siente libremente, fomentando la creatividad y el desarrollo de la
+        escritura. Además, Lics permite conectar con usuarios que comparten intereses,
+        gustos y perspectivas similares, creando una comunidad basada en el respeto,
+        la empatía y el intercambio de ideas.
+      </p>
     </div>
   </div>
-  <div class="col-md-6 mb-3">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">¿Cómo empezar?</h5>
-        <p class="card-text">
-          Crea tu usuario con el botón <strong>+ CREAR USUARIO</strong> en la barra superior,
-          guarda tu ID(numero de identificacion que te da al crear usuario)
-            y úsalo para publicar con <strong>+ CREAR POST</strong> ubicadas
-            en la parte superior derecha de la pagina, Recuerda que al crear tu usuario se te dara
-            un pin para poder actuailizar o borrar perfiles y post, te recomiendo darle like a una publicacion
-            solo una vez para no generar confusiones.
-        </p>
-      </div>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">¿Cómo empezar?</h5>
+      <p class="card-text">
+        Crea tu usuario con el botón <strong>+ CREAR USUARIO</strong> en la barra superior,
+        guarda tu ID (número de identificación que te da al crear usuario)
+        y úsalo para publicar con <strong>+ CREAR POST</strong> ubicadas
+        en la parte superior derecha de la página. Recuerda que al crear tu usuario se te dará
+        un pin para poder actualizar o borrar perfiles y posts. Te recomendamos darle like a una publicación
+        solo una vez para no generar confusiones.
+      </p>
     </div>
   </div>
-</div>
-<div class="col-md-6 mb-3">
-    <div class="card h-100 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">¿Cómo nace LICS?</h5>
-        <p class="card-text">
-          Lics se crea apartir de la idea de que un simple mensaje de expresion
-            podria mejorar tu estado de animo, queriendote expresar libremente
-            y de forma creativa como por ejemplo un poema donde tambien puedas
-            conectar con personas que compartan tu pensamiento e ideas
-        </p>
-      </div>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">¿Cómo nace LICS?</h5>
+      <p class="card-text">
+        Lics se crea a partir de la idea de que un simple mensaje de expresión
+        podría mejorar tu estado de ánimo, queriéndote expresar libremente
+        y de forma creativa como por ejemplo un poema, donde también puedas
+        conectar con personas que compartan tu pensamiento e ideas.
+      </p>
     </div>
   </div>
 </div>
