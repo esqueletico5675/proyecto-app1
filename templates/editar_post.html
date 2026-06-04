@@ -10,16 +10,24 @@
         Por: {{ post.usuario.name if post.usuario else "Usuario desconocido" }}
       </p>
 
+      {% if post.image_url %}
+      <img src="{{ post.image_url }}" class="img-fluid rounded mb-3"
+           style="max-height: 200px; object-fit: cover; width: 100%;">
+      {% endif %}
+
       {% if error %}
         <div class="alert alert-danger">{{ error }}</div>
       {% endif %}
 
-      <!-- Formulario Actualizar -->
       <h6 class="fw-bold">Actualizar contenido</h6>
-      <form method="POST" action="/posts/{{ post.contador_post }}/editar">
+      <form method="POST" action="/posts/{{ post.contador_post }}/editar" enctype="multipart/form-data">
         <div class="mb-3">
           <label class="form-label">Contenido</label>
           <textarea class="form-control" name="contenido" rows="3" required>{{ post.contenido }}</textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Imagen (opcional)</label>
+          <input type="file" class="form-control" name="imagen" accept="image/*">
         </div>
         <div class="mb-3">
           <label class="form-label">PIN</label>
@@ -30,7 +38,6 @@
 
       <hr class="my-4">
 
-      <!-- Formulario Borrar -->
       <h6 class="fw-bold text-danger">Eliminar post</h6>
       <form method="POST" action="/posts/{{ post.contador_post }}/borrar">
         <div class="mb-3">
@@ -41,7 +48,6 @@
       </form>
 
       <a href="/posts" class="btn btn-outline-secondary w-100 mt-3">← Volver a posts</a>
-
     </div>
   </div>
 </div>

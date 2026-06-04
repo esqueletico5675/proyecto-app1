@@ -104,6 +104,7 @@ async def actualizar_post_form(
     session: SessionDep,
     pin: int = Form(),
     contenido: str = Form(),
+    imagen: UploadFile = File(default=None),
 ):
     post = find_one_post(id, session)
     if not post:
@@ -114,7 +115,14 @@ async def actualizar_post_form(
             name="editar_post.html",
             context={"post": post, "error": "PIN incorrecto ❌"}
         )
+    image_url = post.image_url
+    if imagen and imagen.filename and imagen.size > 0:
+        image_url = save_img_remote(imagen)
     update = update_one_post_db(id, PostUpdate(contenido=contenido), session)
+    update.image_url = image_url
+    session.add(update)
+    session.commit()
+    session.refresh(update)
     return templates.TemplateResponse(
         request=request,
         name="post_creado.html",
@@ -162,6 +170,7 @@ async def actualizar_usuario_form(
     session: SessionDep,
     pin: int = Form(),
     name: str = Form(),
+    imagen: UploadFile = File(default=None),
 ):
     usuario = find_one_user(id, session)
     if not usuario:
@@ -172,7 +181,14 @@ async def actualizar_usuario_form(
             name="editar_usuario.html",
             context={"usuario": usuario, "error": "PIN incorrecto ❌"}
         )
+    image_url = usuario.image_url
+    if imagen and imagen.filename and imagen.size > 0:
+        image_url = save_img_remote(imagen)
     update = update_one_usuario_db(id, UserUptade(name=name), session)
+    update.image_url = image_url
+    session.add(update)
+    session.commit()
+    session.refresh(update)
     return templates.TemplateResponse(
         request=request,
         name="usuario_creado.html",

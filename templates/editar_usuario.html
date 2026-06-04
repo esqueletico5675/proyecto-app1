@@ -6,16 +6,25 @@
     <div class="card-body">
       <h4 class="card-title">Editar Usuario #{{ usuario.id }}</h4>
 
+      {% if usuario.image_url %}
+      <img src="{{ usuario.image_url }}" class="rounded-circle mb-3"
+           style="width: 80px; height: 80px; object-fit: cover;">
+      {% endif %}
+
       {% if error %}
         <div class="alert alert-danger">{{ error }}</div>
       {% endif %}
 
-      <h6 class="fw-bold">Actualizar nombre</h6>
-      <form method="POST" action="/usuarios/{{ usuario.id }}/editar">
+      <h6 class="fw-bold">Actualizar perfil</h6>
+      <form method="POST" action="/usuarios/{{ usuario.id }}/editar" enctype="multipart/form-data">
         <div class="mb-3">
           <label class="form-label">Nombre</label>
           <input type="text" class="form-control" name="name"
                  value="{{ usuario.name }}" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Foto de perfil (opcional)</label>
+          <input type="file" class="form-control" name="imagen" accept="image/*">
         </div>
         <div class="mb-3">
           <label class="form-label">PIN</label>

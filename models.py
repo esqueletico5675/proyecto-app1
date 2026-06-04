@@ -38,6 +38,7 @@ class UserwithPost(SQLModel):
 
 class UserUptade(SQLModel):
     name: str | None = None
+    image_url: str | None = None
 
 class PostUpdate(SQLModel):
     contenido: str | None = None
