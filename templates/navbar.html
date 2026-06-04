@@ -17,7 +17,7 @@
         </li>
       </ul>
       <form class="d-flex me-3" role="search" action="/buscar" method="get">
-        <input class="form-control me-2" type="search" name="word" placeholder="Buscar post..." aria-label="Search"/>
+        <input class="form-control me-2" type="search" name="word" placeholder="Buscar post..." aria-label="Search" minlength="1" required/>
         <button class="btn btn-outline-success" type="submit">Buscar</button>
       </form>
       <div class="d-flex gap-2">
@@ -42,15 +42,27 @@
         <h5 class="modal-title" id="modalUsuarioLabel">Crear Usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="/form/crear-usuario" enctype="multipart/form-data">
+      <form method="POST" action="/form/crear-usuario" enctype="multipart/form-data" novalidate>
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="name" placeholder="Ej: pepe" required>
+            <input type="text" class="form-control" name="name"
+                   placeholder="Ej: pepe"
+                   minlength="1" maxlength="15"
+                   pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]+"
+                   title="Solo letras, máximo 15 caracteres"
+                   required>
+            <div class="invalid-feedback">Nombre requerido, solo letras y máximo 15 caracteres.</div>
           </div>
           <div class="mb-3">
             <label class="form-label">PIN</label>
-            <input type="number" class="form-control" name="pin" placeholder="Ej: 1234" required>
+            <input type="password" class="form-control" name="pin"
+                   placeholder="Ej: 1234"
+                   minlength="4" maxlength="6"
+                   pattern="\d{4,6}"
+                   title="PIN de 4 a 6 dígitos numéricos"
+                   required>
+            <div class="invalid-feedback">PIN debe ser de 4 a 6 dígitos numéricos.</div>
           </div>
           <div class="mb-3">
             <label class="form-label">Foto de perfil (opcional)</label>
@@ -74,15 +86,21 @@
         <h5 class="modal-title" id="modalPostLabel">Crear Post</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="/form/crear-post" enctype="multipart/form-data">
+      <form method="POST" action="/form/crear-post" enctype="multipart/form-data" novalidate>
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">ID de Usuario</label>
-            <input type="number" class="form-control" name="user_id" placeholder="Ej: 1" required>
+            <input type="number" class="form-control" name="user_id"
+                   placeholder="Ej: 1" min="1" required>
+            <div class="invalid-feedback">Ingresa un ID de usuario válido.</div>
           </div>
           <div class="mb-3">
             <label class="form-label">Contenido</label>
-            <textarea class="form-control" name="contenido" rows="3" placeholder="Escribe tu post..." required></textarea>
+            <textarea class="form-control" name="contenido" rows="3"
+                      placeholder="Escribe tu post..."
+                      minlength="5" maxlength="500"
+                      required></textarea>
+            <div class="invalid-feedback">El contenido debe tener entre 5 y 500 caracteres.</div>
           </div>
           <div class="mb-3">
             <label class="form-label">Imagen (opcional)</label>

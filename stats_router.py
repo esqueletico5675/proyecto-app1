@@ -1,9 +1,3 @@
-"""
-stats_router.py — Criterio 15
-Router de estadísticas/dashboard para la app FastAPI.
-Registrar en main.py con: app.include_router(stats_router)
-"""
-
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -18,10 +12,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 def get_dashboard_data(session: Session) -> dict:
-    """
-    Calcula y retorna todas las métricas del dashboard.
-    Devuelve un dict listo para pasarle al template o como JSON.
-    """
+
 
     # --- Totales generales ---
     total_posts = session.exec(select(func.count(Post.contador_post))).one()
@@ -82,10 +73,7 @@ def get_dashboard_data(session: Session) -> dict:
 
 @stats_router.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request, session: SessionDep):
-    """
-    Página principal del dashboard con estadísticas visuales.
-    Renderiza templates/dashboard.html con todos los datos calculados.
-    """
+
     data = get_dashboard_data(session)
     return templates.TemplateResponse(
         request=request,
@@ -96,10 +84,7 @@ async def dashboard(request: Request, session: SessionDep):
 
 @stats_router.get("/json")
 async def dashboard_json(session: SessionDep):
-    """
-    Endpoint JSON con las mismas estadísticas del dashboard.
-    Útil para consumir desde el frontend o herramientas externas.
-    """
+
     data = get_dashboard_data(session)
     # Serializar los objetos Post para que sean JSON-friendly
     data["top_posts"] = [
