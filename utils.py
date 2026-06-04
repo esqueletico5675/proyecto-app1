@@ -4,6 +4,7 @@ import shutil
 from fastapi import File,UploadFile,HTTPException
 from supabase import create_client
 from dotenv import load_dotenv
+import uuid
 
 load_dotenv()
 
@@ -30,12 +31,13 @@ def supabase_client():
         raise RuntimeError("No credentials")
     return create_client(url, key)
 
-def save_img_remote(file:UploadFile):
+def save_img_remote(file: UploadFile):
     if not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Archivo Invalido")
 
     contents = file.file.read()
-    path = file.filename
+    extension = file.filename.split(".")[-1]
+    path = f"{uuid.uuid4()}.{extension}"  # nombre único
 
     supa_client = supabase_client()
 
@@ -43,11 +45,10 @@ def save_img_remote(file:UploadFile):
         path=path,
         file=contents,
         file_options={"content-type": file.content_type}
-        ,
     )
-    stored_url_bucket=(supa_client.
-                       storage.
-                       from_(SUPABASE_BUCKET).
-                       get_public_url(path))
+    stored_url_bucket = (supa_client
+                         .storage
+                         .from_(SUPABASE_BUCKET)
+                         .get_public_url(path))
 
     return stored_url_bucket
