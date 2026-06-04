@@ -53,14 +53,17 @@ async def form_crear_usuario(
     session: SessionDep,
     name: str = Form(),
     pin: int = Form(),
+    imagen: UploadFile = File(default=None),
 ):
-    usuario = UserBase(name=name, pin=pin)
+    image_url = None
+    if imagen and imagen.filename:
+        image_url = save_img_remote(imagen)
+    usuario = UserBase(name=name, pin=pin, image_url=image_url)
     resultado = crearusuario_db(usuario, session)
     return templates.TemplateResponse(
         request=request,
         name="usuario_creado.html",
-        context={"usuario": resultado}
-    )
+        context={"usuario": resultado})
 
 @app.post("/form/crear-post", response_class=HTMLResponse)
 async def form_crear_post(
@@ -68,8 +71,12 @@ async def form_crear_post(
     session: SessionDep,
     user_id: int = Form(),
     contenido: str = Form(),
+    imagen: UploadFile = File(default=None),
 ):
-    post = CreatePost(id_usuario=user_id, contenido=contenido)
+    image_url = None
+    if imagen and imagen.filename:
+        image_url = save_img_remote(imagen)
+    post = CreatePost(id_usuario=user_id, contenido=contenido, image_url=image_url)
     resultado = create_post(post, session)
     if not resultado:
         raise HTTPException(status_code=404, detail="Usuario no existe o está inactivo")

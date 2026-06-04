@@ -5,6 +5,7 @@ from sqlmodel import SQLModel, Field, Relationship
 class UserBase(SQLModel):
     name: str = Field(default=None, min_length=1, max_length=15)
     pin: int
+    image_url: Optional[str] = Field(default=None)
 
 class UserID(UserBase, table=True):
     id: int = Field(primary_key=True, default=None)
@@ -17,11 +18,13 @@ class Post(SQLModel, table=True):
     id_usuario: int = Field(default=None, foreign_key="userid.id")
     pin: Optional[int] = Field(default=0)
     likes_count: Optional[int] = Field(default=0)
+    image_url: Optional[str] = Field(default=None)
     usuario: Optional[UserID] = Relationship(back_populates="posts")
 
 class CreatePost(SQLModel):
     contenido: str
     id_usuario: int
+    image_url: Optional[str] = Field(default=None)
 
 class PostnoID(SQLModel):
     contenido: str

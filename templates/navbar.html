@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/usuarios">VER PERFILES</a>
+          <a class="nav-link active" aria-current="page" href="/usuarios">Usuarios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/posts">VER POST</a>
+          <a class="nav-link" href="/posts">Posts</a>
         </li>
       </ul>
       <form class="d-flex me-3" role="search" action="/buscar" method="get">
@@ -20,11 +20,11 @@
       <div class="d-flex gap-2">
         <button class="btn btn-primary" type="button"
                 data-bs-toggle="modal" data-bs-target="#modalCrearUsuario">
-          + CREAR USUARIO
+          + Usuario
         </button>
         <button class="btn btn-primary" type="button"
                 data-bs-toggle="modal" data-bs-target="#modalCrearPost">
-          + CREAR POST
+          + Post
         </button>
       </div>
     </div>
@@ -39,16 +39,20 @@
         <h5 class="modal-title" id="modalUsuarioLabel">Crear Usuario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="/form/crear-usuario">
+      <form method="POST" action="/form/crear-usuario" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input type="text" class="form-control" name="name" placeholder="Ej: pepe" required>
           </div>
           <div class="mb-3">
-              <label class="form-label">PIN (para editar o borrar después)</label>
-              <input type="password" class="form-control" name="pin" placeholder="Ej: 1234" required>
-        </div>
+            <label class="form-label">PIN</label>
+            <input type="password" class="form-control" name="pin" placeholder="Ej: 1234" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Foto de perfil (opcional)</label>
+            <input type="file" class="form-control" name="imagen" accept="image/*">
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -67,7 +71,7 @@
         <h5 class="modal-title" id="modalPostLabel">Crear Post</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="/form/crear-post">
+      <form method="POST" action="/form/crear-post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">ID de Usuario</label>
@@ -76,6 +80,10 @@
           <div class="mb-3">
             <label class="form-label">Contenido</label>
             <textarea class="form-control" name="contenido" rows="3" placeholder="Escribe tu post..." required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Imagen (opcional)</label>
+            <input type="file" class="form-control" name="imagen" accept="image/*">
           </div>
         </div>
         <div class="modal-footer">

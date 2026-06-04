@@ -34,7 +34,8 @@ def create_post(post: CreatePost, session: Session):
     nuevo_post = Post(
         contenido=post.contenido,
         id_usuario=post.id_usuario,
-        pin=usuario.pin  # <-- copia el pin del usuario
+        pin=usuario.pin,
+        image_url=post.image_url
     )
     session.add(nuevo_post)
     session.commit()
