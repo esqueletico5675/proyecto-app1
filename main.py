@@ -15,11 +15,13 @@ from fastapi import FastAPI,HTTPException, UploadFile, File, Depends
 from utils import save_img_local,save_img_remote
 from fastapi.templating import Jinja2Templates
 from fastapi import Request, Form
+from stats_router import stats_router
 
 
 
 app = FastAPI(lifespan=create_all_tables)
 templates = Jinja2Templates(directory="templates")
+app.include_router(stats_router)
 
 @app.get("/", response_class=HTMLResponse)
 async def home (request: Request):
