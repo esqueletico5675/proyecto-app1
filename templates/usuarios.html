@@ -9,6 +9,7 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,16 @@
                     {% else %}
                         <span class="badge bg-danger">Inactivo</span>
                     {% endif %}
+                </td>
+                <td class="d-flex gap-2">
+                    <a href="/usuarios/{{ usuario.id }}/editar"
+                       class="btn btn-sm btn-outline-warning">✏️ Editar</a>
+                    <form method="POST" action="/form/borrar-usuario/{{ usuario.id }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('¿Seguro que quieres eliminar a {{ usuario.name }}?')">
+                            🗑 Borrar
+                        </button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

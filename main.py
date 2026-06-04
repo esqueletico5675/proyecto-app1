@@ -50,10 +50,11 @@ def buscar_posts(request: Request, word: str, session: SessionDep):
 @app.post("/form/crear-usuario", response_class=HTMLResponse)
 async def form_crear_usuario(
     request: Request,
+    session: SessionDep,
     name: str = Form(),
-    session: SessionDep = None
+    pin: int = Form(),
 ):
-    usuario = UserBase(name=name)
+    usuario = UserBase(name=name, pin=pin)
     resultado = crearusuario_db(usuario, session)
     return templates.TemplateResponse(
         request=request,
@@ -67,12 +68,8 @@ async def form_crear_post(
     session: SessionDep,
     user_id: int = Form(),
     contenido: str = Form(),
-    pin: int = Form(),
-
-
-
 ):
-    post = CreatePost(id_usuario=user_id, contenido=contenido, pin=pin)
+    post = CreatePost(id_usuario=user_id, contenido=contenido)
     resultado = create_post(post, session)
     if not resultado:
         raise HTTPException(status_code=404, detail="Usuario no existe o está inactivo")
@@ -82,7 +79,6 @@ async def form_crear_post(
         context={"post": resultado}
     )
 
-
 @app.get("/posts/{id}/editar", response_class=HTMLResponse)
 async def form_editar_post(id: int, request: Request, session: SessionDep):
     post = find_one_post(id, session)
@@ -91,10 +87,11 @@ async def form_editar_post(id: int, request: Request, session: SessionDep):
     return templates.TemplateResponse(
         request=request,
         name="editar_post.html",
-        context={"post": post})
+        context={"post": post}
+    )
 
 @app.post("/posts/{id}/editar", response_class=HTMLResponse)
-async def actualizar_post(
+async def actualizar_post_form(
     id: int,
     request: Request,
     session: SessionDep,
@@ -114,11 +111,11 @@ async def actualizar_post(
     return templates.TemplateResponse(
         request=request,
         name="post_creado.html",
-        context={"post": update, "mensaje": "Post actualizado ✓"}
+        context={"post": update}
     )
 
 @app.post("/posts/{id}/borrar", response_class=HTMLResponse)
-async def borrar_post(
+async def borrar_post_form(
     id: int,
     request: Request,
     session: SessionDep,
@@ -139,6 +136,61 @@ async def borrar_post(
         name="post_borrado.html",
         context={}
     )
+
+@app.get("/usuarios/{id}/editar", response_class=HTMLResponse)
+async def form_editar_usuario(id: int, request: Request, session: SessionDep):
+    usuario = find_one_user(id, session)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return templates.TemplateResponse(
+        request=request,
+        name="editar_usuario.html",
+        context={"usuario": usuario}
+    )
+
+@app.post("/usuarios/{id}/editar", response_class=HTMLResponse)
+async def actualizar_usuario_form(
+    id: int,
+    request: Request,
+    session: SessionDep,
+    pin: int = Form(),
+    name: str = Form(),
+):
+    usuario = find_one_user(id, session)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    if usuario.pin != pin:
+        return templates.TemplateResponse(
+            request=request,
+            name="editar_usuario.html",
+            context={"usuario": usuario, "error": "PIN incorrecto ❌"}
+        )
+    update = update_one_usuario_db(id, UserUptade(name=name), session)
+    return templates.TemplateResponse(
+        request=request,
+        name="usuario_creado.html",
+        context={"usuario": update}
+    )
+
+@app.post("/form/borrar-usuario/{id}", response_class=HTMLResponse)
+async def borrar_usuario_form(
+    id: int,
+    request: Request,
+    session: SessionDep,
+    pin: int = Form(),
+):
+    usuario = find_one_user(id, session)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    if usuario.pin != pin:
+        return templates.TemplateResponse(
+            request=request,
+            name="editar_usuario.html",
+            context={"usuario": usuario, "error": "PIN incorrecto ❌"}
+        )
+    Delete_user_db(id, session)
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/usuarios", status_code=303)
 
 @app.post("/CREATE_USERS",response_model=UserID)
 async def cargarusuario(usuario:UserBase, session:SessionDep):

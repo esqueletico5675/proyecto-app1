@@ -27,15 +27,19 @@ def find_one_post (id: int ,session:Session):
     except NoResultFound:
         return None
 
-def create_post(post:CreatePost, session:Session):
-    user = find_one_user(post.id_usuario, session)
-    if user is None:
+def create_post(post: CreatePost, session: Session):
+    usuario = session.get(UserID, post.id_usuario)
+    if not usuario or not usuario.activo:
         return None
-    nuevopost = Post.model_validate(post)
-    session.add(nuevopost)
+    nuevo_post = Post(
+        contenido=post.contenido,
+        id_usuario=post.id_usuario,
+        pin=usuario.pin  # <-- copia el pin del usuario
+    )
+    session.add(nuevo_post)
     session.commit()
-    session.refresh(nuevopost)
-    return nuevopost
+    session.refresh(nuevo_post)
+    return nuevo_post
 
 def obtener_posts_db(session: Session):
     return session.exec(select(Post).order_by(Post.contador_post.desc())).all()

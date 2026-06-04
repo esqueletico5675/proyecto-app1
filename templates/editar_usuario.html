@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="d-flex justify-content-center mt-4">
+  <div class="card shadow" style="width: 28rem;">
+    <div class="card-body">
+      <h4 class="card-title">Editar Usuario #{{ usuario.id }}</h4>
+
+      {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <h6 class="fw-bold">Actualizar nombre</h6>
+      <form method="POST" action="/usuarios/{{ usuario.id }}/editar">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" name="name"
+                 value="{{ usuario.name }}" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">PIN</label>
+          <input type="password" class="form-control" name="pin"
+                 placeholder="Ingresa tu PIN" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+      </form>
+
+      <hr class="my-4">
+
+      <h6 class="fw-bold text-danger">Eliminar usuario</h6>
+      <form method="POST" action="/form/borrar-usuario/{{ usuario.id }}">
+        <div class="mb-3">
+          <label class="form-label">PIN</label>
+          <input type="password" class="form-control" name="pin"
+                 placeholder="Ingresa tu PIN" required>
+        </div>
+        <button type="submit" class="btn btn-danger w-100">🗑 Eliminar</button>
+      </form>
+
+      <a href="/usuarios" class="btn btn-outline-secondary w-100 mt-3">← Volver</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
