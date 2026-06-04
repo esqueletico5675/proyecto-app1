@@ -28,7 +28,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label">PIN</label>
-          <input type="password" class="form-control" name="pin"
+          <input type="number" class="form-control" name="pin"
                  placeholder="Ingresa tu PIN" required>
         </div>
         <button type="submit" class="btn btn-primary w-100">Actualizar</button>
@@ -40,7 +40,7 @@
       <form method="POST" action="/form/borrar-usuario/{{ usuario.id }}">
         <div class="mb-3">
           <label class="form-label">PIN</label>
-          <input type="password" class="form-control" name="pin"
+          <input type="number" class="form-control" name="pin"
                  placeholder="Ingresa tu PIN" required>
         </div>
         <button type="submit" class="btn btn-danger w-100">🗑 Eliminar</button>

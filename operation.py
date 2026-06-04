@@ -52,6 +52,7 @@ def Delete_user_db(id: int, session: Session):
         session.add(user)
         session.commit()
         session.refresh(user)
+        return user
     except NoResultFound:
         return None
 

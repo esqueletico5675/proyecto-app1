@@ -76,12 +76,16 @@ async def form_crear_post(
     imagen: UploadFile = File(default=None),
 ):
     image_url = None
-    if imagen and imagen.filename:
+    if imagen and imagen.filename and imagen.size > 0:
         image_url = save_img_remote(imagen)
     post = CreatePost(id_usuario=user_id, contenido=contenido, image_url=image_url)
     resultado = create_post(post, session)
     if not resultado:
-        raise HTTPException(status_code=404, detail="Usuario no existe o está inactivo")
+        return templates.TemplateResponse(
+            request=request,
+            name="error.html",
+            context={"mensaje": "Usuario no existe o está inactivo"}
+        )
     return templates.TemplateResponse(
         request=request,
         name="post_creado.html",

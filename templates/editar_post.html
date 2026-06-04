@@ -4,11 +4,8 @@
 <div class="d-flex justify-content-center mt-4">
   <div class="card shadow" style="width: 32rem;">
     <div class="card-body">
-
-      <h4 class="card-title mb-1">Post #{{ post.contador_post }}</h4>
-      <p class="text-muted mb-4">
-        Por: {{ post.usuario.name if post.usuario else "Usuario desconocido" }}
-      </p>
+      <h4 class="card-title">Post #{{ post.contador_post }}</h4>
+      <p class="text-muted">Por: {{ post.usuario.name if post.usuario else "Usuario desconocido" }}</p>
 
       {% if post.image_url %}
       <img src="{{ post.image_url }}" class="img-fluid rounded mb-3"
@@ -23,7 +20,7 @@
       <form method="POST" action="/posts/{{ post.contador_post }}/editar" enctype="multipart/form-data">
         <div class="mb-3">
           <label class="form-label">Contenido</label>
-          <textarea class="form-control" name="contenido" rows="3" required>{{ post.contenido }}</textarea>
+          <textarea class="form-control" name="contenido" rows="4" required>{{ post.contenido }}</textarea>
         </div>
         <div class="mb-3">
           <label class="form-label">Imagen (opcional)</label>
@@ -31,7 +28,8 @@
         </div>
         <div class="mb-3">
           <label class="form-label">PIN</label>
-          <input type="password" class="form-control" name="pin" placeholder="Ingresa tu PIN" required>
+          <input type="number" class="form-control" name="pin"
+                 placeholder="Ingresa tu PIN" required>
         </div>
         <button type="submit" class="btn btn-primary w-100">Actualizar</button>
       </form>
@@ -42,7 +40,8 @@
       <form method="POST" action="/posts/{{ post.contador_post }}/borrar">
         <div class="mb-3">
           <label class="form-label">PIN</label>
-          <input type="password" class="form-control" name="pin" placeholder="Ingresa tu PIN" required>
+          <input type="number" class="form-control" name="pin"
+                 placeholder="Ingresa tu PIN" required>
         </div>
         <button type="submit" class="btn btn-danger w-100">🗑 Eliminar</button>
       </form>
