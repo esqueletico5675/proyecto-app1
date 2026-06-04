@@ -192,6 +192,28 @@ async def borrar_usuario_form(
     from fastapi.responses import RedirectResponse
     return RedirectResponse(url="/usuarios", status_code=303)
 
+@app.post("/posts/{id}/like", response_class=HTMLResponse)
+async def dar_like(id: int, request: Request, session: SessionDep):
+    post = find_one_post(id, session)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    post.likes_count = (post.likes_count or 0) + 1
+    session.add(post)
+    session.commit()
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/posts", status_code=303)
+
+@app.post("/posts/{id}/quitar-like", response_class=HTMLResponse)
+async def quitar_like(id: int, request: Request, session: SessionDep):
+    post = find_one_post(id, session)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post no encontrado")
+    post.likes_count = max(0, (post.likes_count or 0) - 1)
+    session.add(post)
+    session.commit()
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/posts", status_code=303)
+
 @app.post("/CREATE_USERS",response_model=UserID)
 async def cargarusuario(usuario:UserBase, session:SessionDep):
     return crearusuario_db(usuario, session)

@@ -16,6 +16,7 @@ class Post(SQLModel, table=True):
     contenido: str = Field(default=None)
     id_usuario: int = Field(default=None, foreign_key="userid.id")
     pin: Optional[int] = Field(default=0)
+    likes_count: Optional[int] = Field(default=0)
     usuario: Optional[UserID] = Relationship(back_populates="posts")
 
 class CreatePost(SQLModel):

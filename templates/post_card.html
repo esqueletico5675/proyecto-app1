@@ -22,11 +22,18 @@
                 </small>
             </p>
 
-            <div class="d-flex justify-content-between align-items-center mt-2">
-                <button class="btn btn-sm btn-outline-primary btn-like"
-                        data-id="{{ post.contador_post }}">
-                    👍 <span class="likes-count">{{ post.likes_count or 0 }}</span>
-                </button>
+            <div class="d-flex gap-2">
+                <form method="POST" action="/posts/{{ post.contador_post }}/like">
+                 <button type="submit" class="btn btn-sm btn-outline-primary">
+                👍  {{ post.likes_count or 0 }}
+            </button>
+            </form>
+            <form method="POST" action="/posts/{{ post.contador_post }}/quitar-like">
+        <button type="submit" class="btn btn-sm btn-outline-secondary">
+            👎
+        </button>
+        </form>
+                </div>
 
                 <a href="/usuarios/{{ post.usuario.id if post.usuario else '#' }}"
                    class="btn btn-sm btn-outline-secondary">
